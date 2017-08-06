@@ -33,7 +33,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private UserLogin userLogin = new UserLogin();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +40,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         user        = (TextInputEditText)findViewById(R.id.edt_username);
         password    = (TextInputEditText)findViewById(R.id.edt_password);
-
-
 
     }
 
@@ -80,6 +77,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Log.d(TAG, data.toString());
 
                         Log.d(TAG, data +"");
+                        goHome();
 
                         break;
                     case 401:
@@ -99,13 +97,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-
-
     @Override
     public void onClick(View v) {
         userLogin.setUsername(user.getText().toString());
         userLogin.setPassword(password.getText().toString());
 
         loadJson(userLogin);
+
+    }
+
+    public void goHome() {
+        Intent i = new Intent(this, Home.class );
+        startActivity(i);
     }
 }

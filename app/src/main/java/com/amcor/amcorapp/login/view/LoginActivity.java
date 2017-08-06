@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.amcor.amcorapp.FakeInterceptor;
-import com.amcor.amcorapp.Home;
+import com.amcor.amcorapp.HomeActivity;
 import com.amcor.amcorapp.R;
 import com.amcor.amcorapp.RestClient;
 import com.amcor.amcorapp.UserLogin;
@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void goHome() {
-        Intent i = new Intent(this, Home.class );
+        Intent i = new Intent(this, HomeActivity.class );
         startActivity(i);
     }
 }

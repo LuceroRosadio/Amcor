@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.amcor.amcorapp.Home"
+    tools:context="com.amcor.amcorapp.HomeActivity"
     android:fitsSystemWindows="true">
 
     <include
@@ -30,10 +30,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <include layout="@layout/navigation_header"
+                android:id="@+id/header"/>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/homeRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/header"
                 android:layout_marginBottom="25dp">
             </android.support.v7.widget.RecyclerView>
 

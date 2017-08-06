@@ -21,21 +21,21 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class Home extends AppCompatActivity implements RecyclerAdapter.ItemClickChild {
+public class HomeActivity extends AppCompatActivity implements RecyclerAdapter.ItemClickChild {
 
-    @BindView(R.id.homeRecyclerView)
+    //@BindView(R.id.homeRecyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.navigView)
+    //@BindView(R.id.navigView)
     NavigationView navigationView;
-    @BindView(R.id.drawer_layout)
+    //@BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
     String names[] = Constant.name;
     String subNames[] = Constant.subName;
 
-    @BindView(R.id.toolbar_container)
+    //@BindView(R.id.toolbar_container)
     Toolbar toolbar;
-    @BindView(R.id.frameHome)
+    //@BindView(R.id.frameHome)
     FrameLayout frame;
 
     TitleFragment fragment;
@@ -44,7 +44,14 @@ public class Home extends AppCompatActivity implements RecyclerAdapter.ItemClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        ButterKnife.bind(this);
+
+        recyclerView = (RecyclerView)findViewById(R.id.homeRecyclerView);
+        navigationView = (NavigationView)findViewById(R.id.navigView);
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        frame = (FrameLayout)findViewById(R.id.frameHome);
+
+
 
         setSupportActionBar(toolbar);
         final ActionBar actionar = getSupportActionBar();

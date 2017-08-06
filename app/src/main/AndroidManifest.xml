@@ -18,7 +18,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Home" />
+        <activity android:name=".HomeActivity"
+            android:parentActivityName=".login.view.LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".login.view.LoginActivity"/>
+        </activity>
         <activity android:name=".TitleFragment"></activity>
     </application>
 

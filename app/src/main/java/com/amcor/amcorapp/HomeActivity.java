@@ -23,19 +23,19 @@ import butterknife.ButterKnife;
 
 public class HomeActivity extends AppCompatActivity implements RecyclerAdapter.ItemClickChild {
 
-    //@BindView(R.id.homeRecyclerView)
+    @BindView(R.id.homeRecyclerView)
     RecyclerView recyclerView;
-    //@BindView(R.id.navigView)
+    @BindView(R.id.navigView)
     NavigationView navigationView;
-    //@BindView(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
     String names[] = Constant.name;
     String subNames[] = Constant.subName;
 
-    //@BindView(R.id.toolbar_container)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    //@BindView(R.id.frameHome)
+    @BindView(R.id.frameHome)
     FrameLayout frame;
 
     TitleFragment fragment;
@@ -45,13 +45,7 @@ public class HomeActivity extends AppCompatActivity implements RecyclerAdapter.I
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        recyclerView = (RecyclerView)findViewById(R.id.homeRecyclerView);
-        navigationView = (NavigationView)findViewById(R.id.navigView);
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
-        frame = (FrameLayout)findViewById(R.id.frameHome);
-
-
+        ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
         final ActionBar actionar = getSupportActionBar();

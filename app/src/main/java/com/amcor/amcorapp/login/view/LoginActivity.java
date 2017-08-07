@@ -1,5 +1,6 @@
 package com.amcor.amcorapp.login.view;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.amcor.amcorapp.Constant;
 import com.amcor.amcorapp.FakeInterceptor;
 import com.amcor.amcorapp.HomeActivity;
 import com.amcor.amcorapp.R;
@@ -33,6 +35,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private UserLogin userLogin = new UserLogin();
 
+    private Activity activity;
+
+    public LoginActivity(Activity activity) {
+        this.activity = activity;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +57,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .create();
 
         OkHttpClient client = new OkHttpClient.Builder()
-                //using okhttp3 interceptor fake response.
+                //using okhttp3 interceptor fake response ya mira aqui es donde llamas osea la informacion lo tienes aca y de aca tiene que viajar a donde llenas los menus y submenus.
                 .addInterceptor(new FakeInterceptor())
                 .build();
 
@@ -75,6 +83,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         UserResponse data = response.body();
                         Log.d(TAG, data.toString());
+
+                        Intent intent  = new Intent(activity, Constant.class);
+                        intent.putExtra("data",data);
+                        startActivity(intent);
 
                         Log.d(TAG, data +"");
                         goHome();

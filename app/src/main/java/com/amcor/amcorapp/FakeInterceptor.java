@@ -11,6 +11,7 @@ import okhttp3.ResponseBody;
 
 /**
  * Created by johel on 4/08/2017.
+ * te acuerdas en que parte invocas al api
  */
 
 public class FakeInterceptor implements Interceptor {

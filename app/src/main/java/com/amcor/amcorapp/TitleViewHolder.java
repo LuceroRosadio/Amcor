@@ -12,7 +12,7 @@ import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder;
 
 /**
- * Created by johel on 5/08/2017.
+ * Created by johel on 5/08/2017. donde invocas al retrofit
  */
 
 class TitleViewHolder extends GroupViewHolder{

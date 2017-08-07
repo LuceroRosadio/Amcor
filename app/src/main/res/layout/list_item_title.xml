@@ -19,6 +19,9 @@
         android:id="@+id/list_item_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignBaseline="@+id/list_item_icon"
+        android:layout_toRightOf="@+id/list_item_icon"
+        android:layout_marginLeft="10dp"
         android:gravity="center|left"
         tools:text="Title"/>
 

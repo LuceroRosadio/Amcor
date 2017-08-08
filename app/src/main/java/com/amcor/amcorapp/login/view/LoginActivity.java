@@ -35,12 +35,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private UserLogin userLogin = new UserLogin();
 
-    private Activity activity;
-
-    public LoginActivity(Activity activity) {
-        this.activity = activity;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,12 +78,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         UserResponse data = response.body();
                         Log.d(TAG, data.toString());
 
-                        Intent intent  = new Intent(activity, Constant.class);
-                        intent.putExtra("data",data);
-                        startActivity(intent);
-
                         Log.d(TAG, data +"");
-                        goHome();
+                        goHome(data);
 
                         break;
                     case 401:
@@ -118,8 +108,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    public void goHome() {
-        Intent i = new Intent(this, HomeActivity.class );
-        startActivity(i);
+    public void goHome(UserResponse data) {
+        Intent intent  = new Intent(this, HomeActivity.class);
+        intent.putExtra("data",data);
+        startActivity(intent);
     }
 }

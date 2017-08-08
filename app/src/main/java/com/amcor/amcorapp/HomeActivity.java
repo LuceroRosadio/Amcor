@@ -12,8 +12,13 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+
+import com.amcor.amcorapp.data.model.Modulo;
+import com.amcor.amcorapp.data.model.OpcionModulo;
+import com.amcor.amcorapp.data.model.UserResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +28,7 @@ import butterknife.ButterKnife;
 
 public class HomeActivity extends AppCompatActivity implements RecyclerAdapter.ItemClickChild {
 
+    private static final String TAG = "HomeActivity";
     @BindView(R.id.homeRecyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.navigView)
@@ -30,8 +36,8 @@ public class HomeActivity extends AppCompatActivity implements RecyclerAdapter.I
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
-    String names[] = Constant.name;
-    String subNames[] = Constant.subName;
+    //String names[] = Constant.name;
+    //String subNames[] = Constant.subName;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -40,19 +46,46 @@ public class HomeActivity extends AppCompatActivity implements RecyclerAdapter.I
 
     TitleFragment fragment;
 
+    public List<Modulo> moduloList = new ArrayList<>();
+    public String moduloName;
+    public String names[] ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        UserResponse data = (UserResponse)getIntent().getSerializableExtra("data");
+        Log.d(TAG, "DATA:" +data);
+
+        Log.d(TAG, "moduloList" +data.getUsuario().getModuloList());
+
         ButterKnife.bind(this);
+
+        moduloList = data.getUsuario().getModuloList();
+        /*for (Modulo modulo: moduloList
+             ) {
+            moduloName = modulo.getNombreModulo();
+            Log.d(TAG, "modulo: "+moduloName);
+        }
+
+        String names[] = new String[moduloList.size()];
+        int i = 0;
+        for (Modulo modulo : moduloList
+                ) {
+            names[i] = modulo.getNombreModulo();
+            Log.d(TAG, "modulo: "+names[i]);
+            i++;
+        }*/
+
 
         setSupportActionBar(toolbar);
         final ActionBar actionar = getSupportActionBar();
         actionar.setDisplayHomeAsUpEnabled(true);
         actionar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
-        List<TitleMenu> list = getList();
+        //List<TitleMenu> list = getList();
+        List<TitleMenu> list = getMenu(moduloList);
         RecyclerAdapter adapter = new RecyclerAdapter(this, list, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -62,7 +95,7 @@ public class HomeActivity extends AppCompatActivity implements RecyclerAdapter.I
         setFragment();
     }
 
-    private List<TitleMenu> getList() {
+    /*private List<TitleMenu> getList() {
         List<TitleMenu> list = new ArrayList<>();
         for (int i = 0; i < names.length; i++) {
             List<Subtitule> subTitles = new ArrayList<>();
@@ -74,6 +107,24 @@ public class HomeActivity extends AppCompatActivity implements RecyclerAdapter.I
             list.add(model);
         }
         return list;
+    }*/
+
+    //obtiene nombres de menus y submenus
+    private List<TitleMenu> getMenu(List<Modulo> moduloList) {
+        List<TitleMenu> titleMenus = new ArrayList<>();
+        int i = 0;
+        for (Modulo modulo: moduloList
+             ) {
+            List<Subtitule> subtitules = new ArrayList<>();
+            for (OpcionModulo opcionModulo: modulo.getOpcionModuloList()
+                 ) {
+                Subtitule subtitule = new Subtitule(opcionModulo.getNombreOpcion());
+                subtitules.add(subtitule);
+            }
+            TitleMenu model = new TitleMenu(modulo.getNombreModulo(), subtitules, null);
+            titleMenus.add(model);
+        }
+        return titleMenus;
     }
 
     @Override
@@ -94,8 +145,10 @@ public class HomeActivity extends AppCompatActivity implements RecyclerAdapter.I
     }
 
     @Override
-    public void onChildClick(int position) {
-        String name = subNames[position];
+    public void onChildClick(int position, String name) {
+        Log.d(TAG, "position" +position);
+        //String name = "name";
+                //subNames[position];
         drawerLayout.closeDrawers();
         fragment.setTitle(name);
     }

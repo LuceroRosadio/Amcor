@@ -2,13 +2,14 @@ package com.amcor.amcorapp.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by johel on 4/08/2017.
  */
 
-public class Usuario {
+public class Usuario implements Serializable {
 
     @SerializedName("cliente")
     private Cliente cliente;

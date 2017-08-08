@@ -2,11 +2,13 @@ package com.amcor.amcorapp.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by johel on 4/08/2017.
  */
 
-public class OpcionModulo {
+public class OpcionModulo implements Serializable{
 
     @SerializedName("codOpcion")
     private String codOpcion;

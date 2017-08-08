@@ -2,6 +2,7 @@ package com.amcor.amcorapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import java.util.List;
 
 public class RecyclerAdapter extends ExpandableRecyclerViewAdapter<TitleViewHolder, SubTitleViewHolder> {
 
+    private static final String TAG = "RecyclerAdapter";
     private Context context;
     private ItemClickChild mListener;
     public RecyclerAdapter(Context context, List groups, Activity activity) {
@@ -48,7 +50,8 @@ public class RecyclerAdapter extends ExpandableRecyclerViewAdapter<TitleViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onChildClick(childIndex);
+                Log.d(TAG, "onClickChild"+subtitule.getName());
+                mListener.onChildClick(childIndex, subtitule.getName());
             }
         });
     }
@@ -59,6 +62,6 @@ public class RecyclerAdapter extends ExpandableRecyclerViewAdapter<TitleViewHold
     }
 
     public interface ItemClickChild {
-        void onChildClick(int position);
+        void onChildClick(int position, String name);
     }
 }

@@ -1,4 +1,4 @@
-package com.amcor.amcorapp;
+package com.amcor.amcorapp.menu;
 
 import android.content.Context;
 import android.view.View;
@@ -7,36 +7,29 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.amcor.amcorapp.R;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder;
 
 /**
- * Created by johel on 5/08/2017.
+ * Created by johel on 8/08/2017.
  */
 
-class TitleViewHolder extends GroupViewHolder{
-    private TextView titleName;
-    private ImageView arrow;
-    private ImageView icon;
+public class ModuloViewHolder extends GroupViewHolder {
 
-    public TitleViewHolder(View itemView) {
+    private TextView moduloName;
+    private ImageView arrow;
+
+    public ModuloViewHolder(View itemView) {
         super(itemView);
 
-        titleName = (TextView)itemView.findViewById(R.id.list_item_name);
-        arrow = (ImageView) itemView.findViewById(R.id.list_item_arrow);
-        icon = (ImageView) itemView.findViewById(R.id.list_item_icon);
+        moduloName = (TextView)itemView.findViewById(R.id.list_modulo_name);
+        arrow = (ImageView)itemView.findViewById(R.id.list_item_arrow);
     }
 
-    public void setGenreTitle(Context context, ExpandableGroup title) {
-        if (title instanceof TitleMenu) {
-            titleName.setText(title.getTitle());
-            if (((TitleMenu) title).getImageUrl() != null && ((TitleMenu) title).getImageUrl().isEmpty()) {
-                Glide.with(context)
-                        .load(((TitleMenu) title).getImageUrl())
-                        .into(icon);
-
-            }
+    public void setGenreModuloTitle(Context context, ExpandableGroup title) {
+        if (title instanceof ModuloMenu) {
+            moduloName.setText(title.getTitle());
         }
     }
 

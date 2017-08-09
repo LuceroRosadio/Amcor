@@ -1,5 +1,8 @@
 package com.amcor.amcorapp.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -8,7 +11,7 @@ import java.io.Serializable;
  * Created by johel on 4/08/2017.
  */
 
-public class UserResponse implements Serializable
+public class UserResponse implements Parcelable
 {
 
     @SerializedName("usuario")
@@ -23,6 +26,23 @@ public class UserResponse implements Serializable
         this.usuario = usuario;
         this.token = token;
     }
+
+    protected UserResponse(Parcel in) {
+        usuario = in.readParcelable(Usuario.class.getClassLoader());
+        token = in.readString();
+    }
+
+    public static final Creator<UserResponse> CREATOR = new Creator<UserResponse>() {
+        @Override
+        public UserResponse createFromParcel(Parcel in) {
+            return new UserResponse(in);
+        }
+
+        @Override
+        public UserResponse[] newArray(int size) {
+            return new UserResponse[size];
+        }
+    };
 
     @Override
     public String toString() {
@@ -46,5 +66,16 @@ public class UserResponse implements Serializable
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(usuario, flags);
+        dest.writeString(token);
     }
 }

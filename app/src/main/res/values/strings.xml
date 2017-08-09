@@ -6,4 +6,8 @@
     <string name="text_button_login">Login</string>
     <string name="dont_have_account">¿No tienes cuenta?</string>
     <string name="create_here"> Crea una aqui</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="order_request_fragment">Order Request fragment</string>
+    <string name="query_tracking_fragment">Query Tracking fragment</string>
 </resources>

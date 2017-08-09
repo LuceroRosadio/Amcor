@@ -7,6 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.amcor.amcorapp.data.model.OpcionModulo;
+import com.amcor.amcorapp.menu.ModuloMenu;
+import com.amcor.amcorapp.menu.ModuloViewHolder;
+import com.amcor.amcorapp.menu.OpcionModuloViewHolder;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
@@ -18,7 +22,7 @@ import java.util.List;
  * Created by johel on 5/08/2017.
  */
 
-public class RecyclerAdapter extends ExpandableRecyclerViewAdapter<TitleViewHolder, SubTitleViewHolder> {
+public class RecyclerAdapter extends ExpandableRecyclerViewAdapter<ModuloViewHolder, OpcionModuloViewHolder> {
 
     private static final String TAG = "RecyclerAdapter";
     private Context context;
@@ -30,38 +34,38 @@ public class RecyclerAdapter extends ExpandableRecyclerViewAdapter<TitleViewHold
     }
 
     @Override
-    public TitleViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
+    public ModuloViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_title, parent, false);
-        return new TitleViewHolder(view);
+                .inflate(R.layout.list_modulo_title, parent, false);
+        return new ModuloViewHolder(view);
     }
 
     @Override
-    public SubTitleViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
+    public OpcionModuloViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_subtitle, parent, false);
-        return new SubTitleViewHolder(view);
+                .inflate(R.layout.item_opcion_modulo, parent, false);
+        return new OpcionModuloViewHolder(view);
     }
 
     @Override
-    public void onBindChildViewHolder(SubTitleViewHolder holder, int flatPosition, ExpandableGroup group, final int childIndex) {
-        final Subtitule subtitule = ((TitleMenu) group).getItems().get(childIndex);
-        holder.setSubTitleName(subtitule.getName());
+    public void onBindChildViewHolder(OpcionModuloViewHolder holder, int flatPosition, ExpandableGroup group, final int childIndex) {
+        final OpcionModulo opcionModulo = ((ModuloMenu) group).getItems().get(childIndex);
+        holder.setOpcionModuloName(opcionModulo.getNombreOpcion());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClickChild"+subtitule.getName());
-                mListener.onChildClick(childIndex, subtitule.getName());
+                Log.d(TAG, "onClickChild"+opcionModulo.getNombreOpcion());
+                mListener.onChildClick(childIndex, opcionModulo.getEstadoOpcion());
             }
         });
     }
 
     @Override
-    public void onBindGroupViewHolder(TitleViewHolder holder, int flatPosition, ExpandableGroup group) {
-        holder.setGenreTitle(context, group);
+    public void onBindGroupViewHolder(ModuloViewHolder holder, int flatPosition, ExpandableGroup group) {
+        holder.setGenreModuloTitle(context, group);
     }
 
     public interface ItemClickChild {
-        void onChildClick(int position, String name);
+        void onChildClick(int position, String opcion);
     }
 }

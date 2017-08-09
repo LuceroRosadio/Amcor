@@ -1,5 +1,8 @@
 package com.amcor.amcorapp.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -9,7 +12,7 @@ import java.util.List;
  * Created by johel on 4/08/2017.
  */
 
-public class Usuario implements Serializable {
+public class Usuario implements Parcelable {
 
     @SerializedName("cliente")
     private Cliente cliente;
@@ -29,6 +32,25 @@ public class Usuario implements Serializable {
         this.moduloList = moduloList;
         this.nombresUsuario = nombresUsuario;
     }
+
+    protected Usuario(Parcel in) {
+        cliente = in.readParcelable(Cliente.class.getClassLoader());
+        codUsuario = in.readString();
+        moduloList = in.createTypedArrayList(Modulo.CREATOR);
+        nombresUsuario = in.readString();
+    }
+
+    public static final Creator<Usuario> CREATOR = new Creator<Usuario>() {
+        @Override
+        public Usuario createFromParcel(Parcel in) {
+            return new Usuario(in);
+        }
+
+        @Override
+        public Usuario[] newArray(int size) {
+            return new Usuario[size];
+        }
+    };
 
     @Override
     public String toString() {
@@ -70,5 +92,18 @@ public class Usuario implements Serializable {
 
     public void setNombresUsuario(String nombresUsuario) {
         this.nombresUsuario = nombresUsuario;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(cliente, flags);
+        dest.writeString(codUsuario);
+        dest.writeTypedList(moduloList);
+        dest.writeString(nombresUsuario);
     }
 }

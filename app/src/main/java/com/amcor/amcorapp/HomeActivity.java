@@ -1,8 +1,8 @@
 package com.amcor.amcorapp;
 
-import android.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -19,6 +19,9 @@ import android.widget.FrameLayout;
 import com.amcor.amcorapp.data.model.Modulo;
 import com.amcor.amcorapp.data.model.OpcionModulo;
 import com.amcor.amcorapp.data.model.UserResponse;
+import com.amcor.amcorapp.menu.ModuloMenu;
+import com.amcor.amcorapp.menu.fragment.OrderRequestFragment;
+import com.amcor.amcorapp.menu.fragment.QueryTrackingFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +49,7 @@ public class HomeActivity extends AppCompatActivity implements RecyclerAdapter.I
 
     TitleFragment fragment;
 
+
     public List<Modulo> moduloList = new ArrayList<>();
     public String moduloName;
     public String names[] ;
@@ -55,7 +59,7 @@ public class HomeActivity extends AppCompatActivity implements RecyclerAdapter.I
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        UserResponse data = (UserResponse)getIntent().getSerializableExtra("data");
+        UserResponse data = getIntent().getExtras().getParcelable("data");
         Log.d(TAG, "DATA:" +data);
 
         Log.d(TAG, "moduloList" +data.getUsuario().getModuloList());
@@ -85,14 +89,14 @@ public class HomeActivity extends AppCompatActivity implements RecyclerAdapter.I
         actionar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
         //List<TitleMenu> list = getList();
-        List<TitleMenu> list = getMenu(moduloList);
+        List<ModuloMenu> list = getModuloMenu(moduloList);
         RecyclerAdapter adapter = new RecyclerAdapter(this, list, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
 
-        setFragment();
+        //setFragment();
     }
 
     /*private List<TitleMenu> getList() {
@@ -127,6 +131,17 @@ public class HomeActivity extends AppCompatActivity implements RecyclerAdapter.I
         return titleMenus;
     }
 
+    //devuelve menu de modulo y opciones
+    private List<ModuloMenu> getModuloMenu(List<Modulo> moduloList) {
+        List<ModuloMenu> moduloMenus = new ArrayList<>();
+        for (Modulo modulo: moduloList
+             ) {
+            ModuloMenu moduloMenu = new ModuloMenu(modulo.getNombreModulo(),modulo.getOpcionModuloList());
+            moduloMenus.add(moduloMenu);
+        }
+        return moduloMenus;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -138,18 +153,53 @@ public class HomeActivity extends AppCompatActivity implements RecyclerAdapter.I
         return super.onOptionsItemSelected(item);
     }
 
-    private void setFragment() {
+    /*private void setFragment() {
         fragment = new TitleFragment();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameHome, fragment, "TitleFragment").commit();
+    }*/
+
+    @Override
+    public void onChildClick(int position, String opcion) {
+        Log.d(TAG, "position" +position);
+        Log.d(TAG, "opcion" +opcion);
+        //String name = "name";
+                //subNames[position];
+        OrderRequestFragment orderRequestFragment = new OrderRequestFragment();
+        setTitle(opcion);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameHome, orderRequestFragment)
+                .addToBackStack(null)
+                .commit();
+        drawerLayout.closeDrawers();
+
+/*
+        switch (opcion) {
+            case "orderRequest":{
+                Log.d(TAG, "opcion entre" +opcion);
+                OrderRequestFragment orderRequestFragment = new OrderRequestFragment();
+                setTitle(opcion);
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frameHome, orderRequestFragment, "orderRequestFragment")
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .commit();
+                break;
+            }
+            case "queryTracking": {
+                QueryTrackingFragment queryTrackingFragment = new QueryTrackingFragment();
+                setTitle(opcion);
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frameHome, queryTrackingFragment, "querTrackingFragment").commit();
+                break;
+            }
+
+        }*/
+
+
     }
 
     @Override
-    public void onChildClick(int position, String name) {
-        Log.d(TAG, "position" +position);
-        //String name = "name";
-                //subNames[position];
-        drawerLayout.closeDrawers();
-        fragment.setTitle(name);
+    public void setTitle(CharSequence title) {
+        getSupportActionBar().setTitle(title);
     }
 }

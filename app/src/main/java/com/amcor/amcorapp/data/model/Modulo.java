@@ -1,5 +1,8 @@
 package com.amcor.amcorapp.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -9,7 +12,7 @@ import java.util.List;
  * Created by johel on 4/08/2017.
  */
 
-public class Modulo implements Serializable{
+public class Modulo implements Parcelable{
 
     @SerializedName("codModulo")
     private String codModulo;
@@ -26,6 +29,25 @@ public class Modulo implements Serializable{
         this.nombreModulo = nombreModulo;
         this.opcionModuloList = opcionModuloList;
     }
+
+
+    public Modulo(Parcel in) {
+        codModulo = in.readString();
+        nombreModulo = in.readString();
+        opcionModuloList = in.createTypedArrayList(OpcionModulo.CREATOR);
+    }
+
+    public static final Creator<Modulo> CREATOR = new Creator<Modulo>() {
+        @Override
+        public Modulo createFromParcel(Parcel in) {
+            return new Modulo(in);
+        }
+
+        @Override
+        public Modulo[] newArray(int size) {
+            return new Modulo[size];
+        }
+    };
 
     @Override
     public String toString() {
@@ -58,5 +80,17 @@ public class Modulo implements Serializable{
 
     public void setOpcionModuloList(List<OpcionModulo> opcionModuloList) {
         this.opcionModuloList = opcionModuloList;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(codModulo);
+        dest.writeString(nombreModulo);
+        dest.writeTypedList(opcionModuloList);
     }
 }
